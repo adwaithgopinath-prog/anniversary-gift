@@ -5,9 +5,8 @@ import os
 if not os.path.exists('assets'):
     os.makedirs('assets')
 
-# URL to encode (GitHub Pages)
-# Make sure to enable GitHub Pages in your Repo Settings!
-url = "https://adwaithgopinath-prog.github.io/anniversary-gift/"  
+# URL to encode (Netlify Public Link)
+url = "https://chipper-ganache-e3545b.netlify.app/"  
 
 # Generate QR Code
 qr = qrcode.QRCode(
