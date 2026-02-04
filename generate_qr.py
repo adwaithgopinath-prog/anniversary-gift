@@ -5,9 +5,9 @@ import os
 if not os.path.exists('assets'):
     os.makedirs('assets')
 
-# URL to encode (Local Network Testing)
-# Phone must be on SAME WiFi as Laptop!
-url = "http://192.168.1.11:8000/index.html"  
+# URL to encode (GitHub Pages)
+# Make sure to enable GitHub Pages in your Repo Settings!
+url = "https://adwaithgopinath-prog.github.io/anniversary-gift/"  
 
 # Generate QR Code
 qr = qrcode.QRCode(
