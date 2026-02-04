@@ -276,12 +276,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let i = 0;
 
     function typeWriter() {
-        if (i < textToType.length) {
+        if (element && i < textToType.length) {
             element.innerHTML += textToType.charAt(i);
             i++;
             setTimeout(typeWriter, 100);
         }
     }
+    if (element) typeWriter();
 
     /* --- 8. Floating Words Generator --- */
     const words = ["Love", "Forever", "Us", "Magic", "Two Months", "My Heart", "Destiny"];
