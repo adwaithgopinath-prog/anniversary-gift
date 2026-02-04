@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Secret Message</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💝</text></svg>">
+    <style>
+        .riddle-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 48px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .riddle-container {
+            max-width: 700px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            padding: 48px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .riddle-icon {
+            font-size: 64px;
+            margin-bottom: 24px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .riddle-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 32px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .riddle-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            line-height: 2.2;
+            color: #333;
+            margin-bottom: 40px;
+            white-space: pre-line;
+        }
+
+        .answer-section {
+            margin-top: 32px;
+        }
+
+        .answer-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 16px 24px;
+            font-size: 1.2rem;
+            font-family: 'Outfit', sans-serif;
+            border: 3px solid #667eea;
+            border-radius: 50px;
+            text-align: center;
+            outline: none;
+            transition: all 0.3s;
+            background: white;
+            color: #333;
+        }
+
+        .answer-input:focus {
+            border-color: #764ba2;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+            transform: scale(1.02);
+        }
+
+        .submit-btn {
+            margin-top: 24px;
+            padding: 16px 48px;
+            font-size: 1.2rem;
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            font-weight: 600;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-family: 'Outfit', sans-serif;
+            margin-top: 16px;
+            font-size: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .error-message.show {
+            opacity: 1;
+        }
+
+        .hint {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 16px;
+            font-style: italic;
+        }
+
+        /* Floating hearts background */
+        .floating-heart {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0.3;
+            animation: floatHeart 15s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="riddle-page">
+        <!-- Floating hearts -->
+        <div class="floating-heart" style="left: 10%; animation-delay: 0s;">💕</div>
+        <div class="floating-heart" style="left: 30%; animation-delay: 3s;">💖</div>
+        <div class="floating-heart" style="left: 50%; animation-delay: 6s;">💗</div>
+        <div class="floating-heart" style="left: 70%; animation-delay: 9s;">💝</div>
+        <div class="floating-heart" style="left: 90%; animation-delay: 12s;">💞</div>
+
+        <div class="riddle-container">
+            <div class="riddle-icon">🔐</div>
+            <h1 class="riddle-title">Solve the Riddle to Continue</h1>
+            
+            <div class="riddle-text">I am a story written without names,
+Yet every letter knows the truth.
+
+Count 6 hearts in the alphabet,
+Then walk 14 steps forward from A.
+You'll find the one who smiles first.
+
+Now take 4 beats of destiny,
+Add 9 moments of patience,
+And end with 11 reasons to stay.
+That's who the heart chose next.
+
+Between them lies a word
+Spoken without sound,
+Felt without touch,
+And proven without doubt.
+
+Solve the numbers.
+Read between the lines.
+
+The answer is already in love.</div>
+
+            <div class="answer-section">
+                <input 
+                    type="text" 
+                    class="answer-input" 
+                    id="riddle-answer" 
+                    placeholder="Type your answer here..."
+                    autocomplete="off"
+                >
+                <br>
+                <button class="submit-btn" id="submit-answer">Unlock the Surprise</button>
+                <p class="error-message" id="error-msg">Not quite... Think about the numbers and the alphabet 💭</p>
+                <p class="hint">Hint: The answer is three words 💕</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const answerInput = document.getElementById('riddle-answer');
+        const submitBtn = document.getElementById('submit-answer');
+        const errorMsg = document.getElementById('error-msg');
+
+        // Correct answer (case insensitive, flexible spacing)
+        const correctAnswer = 'adwaith loves diksha';
+
+        function checkAnswer() {
+            const userAnswer = answerInput.value.toLowerCase().trim().replace(/\s+/g, ' ');
+            
+            if (userAnswer === correctAnswer) {
+                // Correct! Show success animation and redirect
+                answerInput.style.borderColor = '#27ae60';
+                answerInput.style.background = '#d4edda';
+                errorMsg.classList.remove('show');
+                
+                // Create success message
+                const success = document.createElement('div');
+                success.style.cssText = 'color: #27ae60; font-size: 1.2rem; margin-top: 16px; font-weight: 600;';
+                success.textContent = '✨ Correct! Opening your surprise... ✨';
+                submitBtn.after(success);
+                
+                // Redirect after a short delay
+                setTimeout(() => {
+                    window.location.href = 'home.html';
+                }, 2000);
+            } else {
+                // Wrong answer
+                answerInput.style.borderColor = '#e74c3c';
+                answerInput.style.background = '#f8d7da';
+                errorMsg.classList.add('show');
+                
+                // Shake animation
+                answerInput.style.animation = 'none';
+                setTimeout(() => {
+                    answerInput.style.animation = 'shake 0.5s';
+                }, 10);
+            }
+        }
+
+        // Submit on button click
+        submitBtn.addEventListener('click', checkAnswer);
+
+        // Submit on Enter key
+        answerInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                checkAnswer();
+            }
+        });
+
+        // Reset error styling when user types
+        answerInput.addEventListener('input', () => {
+            answerInput.style.borderColor = '#667eea';
+            answerInput.style.background = 'white';
+            errorMsg.classList.remove('show');
+        });
+
+        // Add shake animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-10px); }
+                75% { transform: translateX(10px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

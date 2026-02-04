@@ -1,0 +1,1285 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Dancing+Script:wght@600;700&family=Cinzel:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+:root {
+  --primary: #ff0a54;
+  --secondary: #ff477e;
+  --accent: #ff85a1;
+  --gold: #ffd700;
+  --dark: #12000b;
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --neon-shadow:
+    0 0 10px var(--primary), 0 0 20px var(--primary), 0 0 40px var(--primary);
+}
+
+/* Pastel theme (toggleable) */
+body.theme-pastel {
+  --primary: #6a7fd1;
+  --secondary: #a4b3ee;
+  --accent: #f3c6e2;
+  --gold: #ffd89c;
+  --dark: #0f1226;
+  --card-bg: rgba(255, 255, 255, 0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: none; /* Custom cursor */
+}
+
+body {
+  font-family: "Outfit", sans-serif;
+  background-color: var(--dark);
+  background-image:
+    radial-gradient(circle at 20% 30%, #2e0015 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, #1a0033 0%, transparent 50%);
+  color: #fff;
+  overflow-x: hidden;
+  perspective: 1000px;
+}
+
+.container {
+  padding-top: 64px;
+}
+
+/* Custom Cursor */
+.cursor {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--primary);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 20000; /* Increased z-index to be above overlay */
+  transition: transform 0.1s;
+  mix-blend-mode: difference;
+}
+
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--gold);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 20000; /* Increased z-index */
+}
+
+/* Entrance Overlay */
+#entrance-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  z-index: 10000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transition: transform 1s cubic-bezier(0.7, 0, 0.3, 1);
+  cursor: auto; /* Restore default cursor on overlay just in case */
+}
+
+/* Pixel Intro Screen */
+/* Pixel Intro Screen - Enhanced */
+.pixel-intro {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    /* Beautiful Romantic Gradient */
+    background: linear-gradient(135deg, #ffc3a0 0%, #ffafbd 100%);
+    border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    overflow-y: auto;
+    z-index: 10001;
+    /* subtle pattern overlay */
+    background-image: 
+        radial-gradient(rgba(255,255,255,0.4) 1px, transparent 1px),
+        linear-gradient(135deg, #ffc3a0 0%, #ffafbd 100%);
+    background-size: 20px 20px, 100% 100%;
+}
+
+.pixel-intro .hearts { 
+    display: flex; 
+    gap: 2rem; 
+    justify-content: center; 
+    margin-bottom: 2rem;
+    font-size: 4rem;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+}
+
+.pixel-intro .heart { 
+    animation: bounce 2s infinite ease-in-out;
+}
+.pixel-intro .heart:nth-child(2) { animation-delay: 0.2s; }
+.pixel-intro .heart:nth-child(3) { animation-delay: 0.4s; }
+
+.pixel-intro h1 { 
+    font-family: 'Press Start 2P', cursive; 
+    color: #fff;
+    text-shadow: 4px 4px 0px #ff5c8d, 6px 6px 0px rgba(0,0,0,0.1);
+    font-size: clamp(2rem, 5vw, 4rem); 
+    text-align: center; 
+    margin: 1rem 0 2rem; 
+    letter-spacing: 2px; 
+    line-height: 1.4;
+}
+
+.pixel-intro .msg { 
+    font-family: 'Press Start 2P', cursive; 
+    color: #fff; 
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+    font-size: clamp(0.9rem, 2.5vw, 1.2rem); 
+    text-align: center; 
+    line-height: 2; 
+    text-transform: uppercase; 
+    max-width: 800px; 
+    margin: 0 auto 3rem; 
+    background: rgba(255, 255, 255, 0.2);
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    backdrop-filter: blur(4px);
+    border: 2px solid rgba(255,255,255,0.4);
+}
+
+.pixel-intro .actions {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Premium Pixel Buttons */
+.pixel-btn {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.2rem;
+    padding: 1.2rem 2.5rem;
+    color: #ff0a54;
+    background: #fff;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 
+        0 6px 0 #ffbdc9,
+        0 12px 20px rgba(0,0,0,0.15);
+    transition: transform 0.1s, box-shadow 0.1s;
+    text-transform: uppercase;
+}
+
+.pixel-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 8px 0 #ffbdc9,
+        0 16px 25px rgba(0,0,0,0.2);
+}
+
+.pixel-btn:active {
+    transform: translateY(4px);
+    box-shadow: 
+        0 2px 0 #ffbdc9,
+        0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* No Button Variation */
+.pixel-btn#noBtn {
+    background: #fff0f5;
+    color: #999;
+    box-shadow: 
+        0 6px 0 #e6d3d8,
+        0 12px 20px rgba(0,0,0,0.1);
+}
+.pixel-btn#noBtn:hover {
+    color: #ff0a54; /* Turn red on hover too */
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+.pixel-intro .sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #e31b23;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-6px);
+  }
+  40% {
+    transform: translateX(6px);
+  }
+  60% {
+    transform: translateX(-4px);
+  }
+  80% {
+    transform: translateX(4px);
+  }
+}
+.shake {
+  animation: shake 0.4s;
+}
+
+.enter-btn {
+  padding: 1rem 3rem;
+  font-size: 2rem;
+  font-family: "Cinzel", serif;
+  background: transparent;
+  border: 2px solid var(--gold);
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  cursor: pointer; /* Ensure pointer cursor */
+  transition: 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.enter-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--gold);
+  transition: 0.5s;
+  z-index: -1;
+}
+
+.enter-btn:hover::before {
+  left: 0;
+}
+
+.enter-btn:hover {
+  color: #000;
+  box-shadow: 0 0 30px var(--gold);
+}
+
+/* Animated Background Stars */
+.stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle var(--duration) infinite ease-in-out;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+}
+
+/* Hero Section */
+/* Hero Section */
+.hero {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transform-style: preserve-3d;
+  background: radial-gradient(circle at center, rgba(255, 10, 84, 0.1), transparent 70%);
+}
+
+.hero-text {
+  text-align: center;
+  z-index: 10;
+  padding: 0 20px;
+}
+
+.hero h1 {
+  font-size: clamp(3rem, 8vw, 6rem); /* Responsive giant text */
+  font-family: "Cinzel", serif;
+  background: linear-gradient(135deg, #ff0a54 0%, #ffbd00 50%, #ff0a54 100%);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  text-shadow: 0 10px 30px rgba(255, 10, 84, 0.4);
+  animation: float 6s ease-in-out infinite, gradientFlow 5s linear infinite;
+  letter-spacing: -2px;
+}
+
+.hero p {
+  font-size: clamp(1rem, 3vw, 1.8rem);
+  font-family: "Outfit", sans-serif;
+  letter-spacing: 4px;
+  margin-top: 1.5rem;
+  opacity: 0;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+  animation: fadeIn 2s 1s forwards;
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* Floating 3D Love Notes */
+.floating-elements {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.floating-word {
+  position: absolute;
+  font-family: "Dancing Script", cursive;
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.15);
+  animation: drift 20s linear infinite;
+}
+
+/* Polaroid Gallery - Premium Polish */
+.gallery-section {
+  padding: 5rem 0;
+  perspective: 1000px;
+  text-align: center;
+}
+
+.polaroid-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 3rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+.polaroid {
+  background: #fff;
+  padding: 1rem 1rem 3.5rem 1rem;
+  width: 280px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  z-index: 1;
+  border-radius: 4px;
+  transform: rotate(var(--rotation, 0deg));
+}
+
+/* Scatter Effect */
+.polaroid:nth-child(odd) { --rotation: -3deg; }
+.polaroid:nth-child(even) { --rotation: 3deg; }
+.polaroid:nth-child(3n) { --rotation: -1.5deg; }
+.polaroid:nth-child(5n) { --rotation: 2deg; }
+
+.polaroid:hover {
+  transform: scale(1.1) rotate(0deg) translateY(-10px);
+  z-index: 100;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+.polaroid img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border: 1px solid #eee;
+  border-radius: 2px;
+}
+
+.polaroid p {
+  position: absolute;
+  bottom: 1rem;
+  width: 100%;
+  left: 0;
+  text-align: center;
+  font-family: "Dancing Script", cursive;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+
+/* Reveal on scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px) scale(0.98);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.polaroid:hover {
+  transform: rotate(0) scale(1.2);
+  z-index: 100;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+}
+
+.polaroid img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  filter: sepia(20%);
+}
+
+.polaroid p {
+  color: #333;
+  font-family: "Dancing Script", cursive;
+  font-size: 1.5rem;
+  margin-top: 1rem;
+}
+
+/* Envelope Letter */
+.letter-section {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1500px;
+}
+
+.envelope-wrapper {
+  position: relative;
+  width: 600px;
+  height: 400px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.envelope-wrapper:hover {
+  transform: translateY(-5px);
+}
+
+.envelope {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #ff477e;
+  transform-style: preserve-3d;
+  transition: transform 1s;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+}
+
+/* Envelope Opening Animation Steps */
+.envelope.open .flap {
+  transform: rotateX(180deg);
+  z-index: 0;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); /* Slower, smoother flip */
+}
+
+.envelope.open .letter {
+  transform: translateY(-350px); /* Rise higher to clear pocket */
+  z-index: 5; /* Sit on top of everything */
+  height: 580px;
+  /* Animate transform with delay, and snap z-index at the end */
+  transition: 
+    transform 1s 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+    z-index 0s 1.6s;
+}
+
+/* Wax Seal */
+.flap::after {
+  content: "❤️";
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 36px;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+  z-index: 10;
+  pointer-events: none;
+}
+
+.flap {
+  position: absolute;
+  top: 0;
+  border-left: 300px solid transparent;
+  border-right: 300px solid transparent;
+  border-top: 210px solid #ff0a54; /* Height of the flap */
+  transform-origin: top;
+  transition: 0.6s;
+  z-index: 4; /* Highest z-index */
+}
+
+.side {
+  position: absolute;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-top: 200px solid transparent; /* Adjust sloping */
+  border-bottom: 200px solid transparent;
+  z-index: 2; /* Above letter, below pocket */
+}
+
+.side.left {
+  left: 0;
+  border-left: 300px solid #ff5c8d; /* Side flap color */
+}
+
+.side.right {
+  right: 0;
+  border-right: 300px solid #ff5c8d; /* Side flap color */
+}
+
+.pocket {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  border-left: 300px solid transparent;
+  border-right: 300px solid transparent;
+  border-bottom: 260px solid #ff7096; /* Pocket height */
+  z-index: 3; /* Above sides */
+  filter: drop-shadow(0 -5px 15px rgba(0, 0, 0, 0.1));
+}
+
+.letter {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  right: 20px;
+  bottom: 10px;
+  background: #fffdf5; /* Warm paper color */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px; /* Subtle grid texture */
+  padding: 3rem 2.5rem;
+  color: #4a4a4a;
+  transition: 0.5s;
+  z-index: 1;
+  overflow-y: auto;
+  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+}
+
+/* Custom Scrollbar for Letter */
+.letter::-webkit-scrollbar {
+  width: 6px;
+}
+.letter::-webkit-scrollbar-track {
+  background: transparent;
+}
+.letter::-webkit-scrollbar-thumb {
+  background: #ffb3c6;
+  border-radius: 10px;
+}
+
+.letter h2 {
+  font-family: "Dancing Script", cursive;
+  color: var(--primary);
+  font-size: 2.8rem;
+  margin-bottom: 1.5rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.letter p {
+  font-family: "Outfit";
+  font-size: 1.25rem;
+  line-height: 1.8;
+  color: #555;
+  font-weight: 300;
+}
+
+/* Puzzle Fixes */
+.tile.dragging {
+  opacity: 0.5;
+  pointer-events: none; /* Crucial for drag & drop to work over slots */
+}
+
+.puzzle-layout {
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Place Board on Top, Pool on Bottom using 'order' */
+.puzzle-board {
+  order: 1;
+  margin-bottom: 2rem;
+}
+
+.piece-pool {
+  order: 2;
+  width: 100%; /* Use full width for pool below board */
+  max-width: 800px;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes drift {
+  0% {
+    transform: translateX(-10vw) rotate(0deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.5;
+  }
+  80% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateX(110vw) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Global enhancements */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Header */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  backdrop-filter: blur(8px);
+  background: linear-gradient(
+    90deg,
+    rgba(18, 0, 11, 0.6),
+    rgba(18, 0, 11, 0.2)
+  );
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 9999;
+}
+.site-header .logo {
+  color: var(--gold);
+  text-decoration: none;
+  font-family: "Cinzel", serif;
+  letter-spacing: 2px;
+}
+.site-header nav {
+  display: flex;
+  gap: 1rem;
+}
+.site-header nav a {
+  color: #fff;
+  text-decoration: none;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+.site-header nav a:hover {
+  opacity: 1;
+}
+.icon-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 0.9rem 1.2rem;
+  border-radius: 999px;
+  text-decoration: none;
+  transition:
+    transform 0.15s,
+    box-shadow 0.3s,
+    background 0.3s;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.btn.primary {
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  color: #fff;
+  box-shadow: var(--neon-shadow);
+}
+.btn.ghost {
+  background: transparent;
+  color: var(--gold);
+}
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Hero CTAs */
+.hero-ctas {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10001;
+}
+.lightbox[hidden] {
+  display: none;
+}
+.lightbox img {
+  max-width: 90vw;
+  max-height: 80vh;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+.lightbox-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 0.4rem 0.6rem;
+  cursor: pointer;
+}
+
+/* Back to top */
+.to-top {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, var(--secondary), var(--accent));
+  color: #fff;
+  border: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.3s,
+    transform 0.2s;
+  z-index: 10002;
+}
+.to-top.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+.to-top:hover {
+  transform: translateY(-2px);
+}
+
+/* Timeline */
+.timeline {
+  padding: 6rem 1rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+.section-title {
+  font-family: "Cinzel", serif;
+  font-size: 2.2rem;
+  color: var(--gold);
+  margin-bottom: 2rem;
+}
+.timeline-track {
+  position: relative;
+  margin: 0 auto;
+  padding: 2rem 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+.milestone {
+  background: var(--card-bg);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 1.2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  transition:
+    transform 0.2s,
+    box-shadow 0.3s;
+}
+.milestone .dot {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  box-shadow: var(--neon-shadow);
+  margin-bottom: 0.6rem;
+}
+.milestone h3 {
+  font-family: "Cinzel", serif;
+  margin: 0.4rem 0;
+  color: #fff;
+}
+.milestone p {
+  color: rgba(255, 255, 255, 0.85);
+}
+.milestone.active {
+  outline: 1px solid rgba(255, 215, 0, 0.4);
+  box-shadow: 0 10px 40px rgba(255, 215, 0, 0.15);
+}
+.milestone:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+}
+
+/* Footer */
+.site-footer {
+  padding: 3rem 1rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.25), transparent);
+}
+.site-footer a {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+/* Puzzle */
+.puzzle-section {
+  padding: 4rem 1rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.puzzle-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+.puzzle-controls label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: rgba(255, 255, 255, 0.9);
+  background: var(--card-bg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.6rem 0.8rem;
+  border-radius: 10px;
+}
+.puzzle-controls .file-input {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.puzzle-controls .file-input input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+/* Puzzle Layout */
+.puzzle-layout {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.piece-pool {
+  width: 300px;
+  min-height: 300px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-content: flex-start;
+  justify-content: center;
+}
+
+.puzzle-board {
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 4), 1fr);
+  /* Use aspect-ratio to keep tiles square-ish (assuming board fits image) */
+  aspect-ratio: var(--cols) / var(--rows);
+  gap: 2px;
+  width: min(600px, 90vw);
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 8px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  margin-bottom: 2rem;
+  order: 1;
+}
+
+.slot {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%; /* Fill grid cell */
+  overflow: hidden;
+  z-index: 1;
+}
+
+.tile {
+  width: 125%; /* Overlap for tabs */
+  height: 125%;
+  margin: -12.5%; /* Center it back */
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: grab;
+  position: relative;
+  z-index: 10;
+  
+  /* Jigsaw Shape Logic using Masks */
+  /* Base: Middle Square */
+  /* Top: Hole (Concave) - unless top edge */
+  /* Right: Tab (Convex) - unless right edge */
+  /* Bottom: Tab (Convex) - unless bottom edge */
+  /* Left: Hole (Concave) - unless left edge */
+  
+  --tab-size: 18%;
+  --mask-bg: linear-gradient(#000 0 0); /* White equivalent for mask */
+  
+  /* The Masks */
+  /* We use radial gradients for circles */
+  
+  /* Center Block */
+  --m-center: linear-gradient(#000 0 0) center/calc(100% - var(--tab-size)*2) calc(100% - var(--tab-size)*2) no-repeat;
+  
+  /* Tabs (Convex - Additive) */
+  --m-right: radial-gradient(circle closest-side, #000 98%, #0000 99%) calc(100% - var(--tab-size)/2) 50%/var(--tab-size) var(--tab-size) no-repeat;
+  --m-bottom: radial-gradient(circle closest-side, #000 98%, #0000 99%) 50% calc(100% - var(--tab-size)/2)/var(--tab-size) var(--tab-size) no-repeat;
+  
+  /* Holes (Concave - Subtractive) - WE SIMULATE HOLES BY NOT DRAWING THERE */
+  /* Actually, mask logic: Opaque = Keep, Transparent = Cut. */
+  /* To make a HOLE, we must exclude that circle from the Center Block. */
+  /* CSS Mask Composite is tricky. Simpler: Draw the shape manually with multiple linear gradients avoiding the hole. */
+  /* Easier approach for generic look: Overlapping circles might be enough visually? NO. */
+  
+  /* Let's try the Clip Path approach again, it supports path() which is cleaner for this. */
+  /* Standard Jigsaw Path (approx) */
+  /* path('M 12 12 H 88 ...') scaled? No, sizing issues. */
+  
+  /* Fallback: Premium Bevel + "Knob" pseudo elements! */
+  /* This is much more reliable for responsive layouts than complex masks. */
+  
+  border-radius: 4px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+}
+
+/* Jigsaw Tabs using Pseudo Elements */
+.tile::after, .tile::before {
+  content: '';
+  position: absolute;
+  background: inherit; /* Matches image! */
+  box-shadow: inset 1px 1px 2px rgba(255,255,255,0.4), inset -1px -1px 2px rgba(0,0,0,0.2);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Right Tab (Convex) */
+.tile:not(.right-edge)::after {
+  width: 24%;
+  height: 24%;
+  top: 38%;
+  right: -12%;
+  /* We need to offset background position for the tab to match image! */
+  /* This is hard with 'inherit' background unless fixed attachment. */
+  /* Simplified: Just use a semi-transparent connector or matching color? */
+  /* Or just Styled "Connectors". */
+  
+  background-image: inherit;
+  background-size: inherit;
+  background-position: inherit; 
+  /* This won't perfectly align without calculation. */
+  /* Let's stick to the MASK approach, it handles image continuity. */
+}
+
+/* REVERTING TO MASK APPROACH (Simple Version) */
+.tile {
+  /* ... reset ... */
+  border: none;
+  box-shadow: none; /* Masks clip shadow. Use filter. */
+  filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.5));
+  
+  /* Mask configuration */
+  /* Top, Left: Circles CUT OUT (Holes) */
+  /* Right, Bottom: Circles ADDED (Tabs) */
+  /* Only if not edges */
+  
+  background-color: #ddd; /* fallback */
+  
+  mask: 
+    /* The Body */
+    linear-gradient(#000 0 0) center/calc(100% - 24%) calc(100% - 24%) no-repeat,
+    
+    /* Right Tab */
+    radial-gradient(circle closest-side, #000 99%, #0000) calc(100% - 12%) 50%/24% 24% no-repeat,
+    
+    /* Bottom Tab */
+    radial-gradient(circle closest-side, #000 99%, #0000) 50% calc(100% - 12%)/24% 24% no-repeat;
+    
+  /* Note: To do HOLES (Top/Left), we need composite destination-out. */
+  /* If not supported (some browsers), we just do Tabs Out. */
+  /* "Jigsaw piece but squares" might just mean "Tabs Out" on all sides? */
+  /* Or Tabs Out Right/Bottom is enough to overlap? */
+  /* Let's do Tabs Out on Right and Bottom. And standard straight on Top/Left. */
+  /* This creates a "Puzzle" look where pieces overlay. */
+  /* Edge pieces hide tabs. */
+}
+
+.tile.right-edge {
+  mask: 
+    linear-gradient(#000 0 0) center/calc(100% - 24%) calc(100% - 24%) no-repeat,
+    radial-gradient(circle closest-side, #000 99%, #0000) 50% calc(100% - 12%)/24% 24% no-repeat; /* Only Bottom Tab */
+    /* Adjust body size? No, keep center. Fix alignment. */
+}
+/* This mask logic is fragile. User wants "Pieces like this (image)". */
+/* The image shows standard interlocking. */
+
+/* BEST ROBUST SOLUTION: */
+/* Use clip-path with a defined Polygon that has a Tab on Right and Bottom. */
+/* Top and Left are flat. (So (0,0) is flat top/left, tab right/bottom). */
+/* (0,1) is flat top, but needs HOLE on left? No, just render it UNDER (0,0)'s tab. */
+/* If z-index is managed, we don't need holes! We just need TABS. */
+/* If (0,0) has a Right Tab, and it sits ON TOP of (0,1), it looks like (0,1) has a hole. */
+/* Perfect! "Tabs Only" approach. */
+
+/* Reverted to Premium Square Tiles for best visual quality */
+.tile {
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  /* Premium 3D Bevel Look */
+  box-shadow: 
+    inset 2px 2px 0px rgba(255, 255, 255, 0.3),
+    inset -2px -2px 0px rgba(0, 0, 0, 0.3),
+    0 4px 6px rgba(0, 0, 0, 0.3);
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: grab;
+  position: relative;
+  z-index: 10;
+  border: 1px solid rgba(0,0,0,0.1);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+/* Hover effect */
+.tile:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    inset 2px 2px 0px rgba(255, 255, 255, 0.3),
+    inset -2px -2px 0px rgba(0, 0, 0, 0.3),
+    0 6px 12px rgba(0, 0, 0, 0.4);
+  z-index: 20;
+}
+
+/* Dragging State */
+.tile.dragging {
+  opacity: 0.8;
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+  pointer-events: none; /* Critical for drag to work */
+  z-index: 100;
+}
+
+/* Selected state for Click-to-Move */
+.tile.selected {
+  outline: 3px solid #ff0a54;
+  outline-offset: -2px;
+  filter: brightness(1.1);
+  z-index: 50;
+  transform: scale(1.05);
+}
+
+/* When tile is in the pool, give it a fixed size */
+/* Improved Piece Pool UI */
+/* Improved Piece Pool UI - The Box */
+.piece-pool {
+  order: 2;
+  width: 100%;
+  max-width: 900px;
+  min-height: 250px; /* Spacious box */
+  background: rgba(0, 0, 0, 0.4); /* Darker interior */
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-top: 2px solid rgba(0, 0, 0, 0.5); /* Shadowed top edge */
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15); /* Lit bottom edge */
+  border-radius: 12px;
+  padding: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-content: flex-start;
+  justify-content: center;
+  /* Deep Recessed Look */
+  box-shadow: 
+    inset 0 10px 30px rgba(0,0,0,0.6),
+    0 2px 4px rgba(255,255,255,0.05); /* Outer highlight */
+  margin-top: 1.5rem;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+/* Optional label for the box */
+.piece-pool::before {
+  content: "PIECES";
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  background: var(--card-bg);
+  padding: 2px 10px;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.6);
+  border-radius: 4px;
+  letter-spacing: 1px;
+}
+
+/* Make pieces in pool look nice and draggable */
+.piece-pool .tile {
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  box-shadow: 
+    0 4px 8px rgba(0,0,0,0.4),
+    inset 1px 1px 0 rgba(255,255,255,0.4);
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: grab;
+}
+
+.piece-pool .tile:hover {
+  transform: scale(1.1) rotate(2deg);
+  z-index: 20;
+  box-shadow: 
+    0 10px 20px rgba(0,0,0,0.5),
+    inset 1px 1px 0 rgba(255,255,255,0.6);
+}
+
+
+.tile:active {
+  cursor: grabbing;
+  transform: scale(1.05);
+  z-index: 100;
+}
+
+.pill {
+  background: var(--card-bg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.puzzle-hint {
+  text-align: center;
+  opacity: 0.75;
+  margin-top: 1.5rem;
+  width: 100%;
+}
+
+.puzzle-win {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: grid;
+  place-items: center;
+  z-index: 10002;
+}
+
+.puzzle-win[hidden] {
+  display: none !important;
+}
+
+.puzzle-win .win-card {
+  background: var(--card-bg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem 2rem;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+}
+
+@media (max-width: 768px) {
+  .puzzle-layout {
+      flex-direction: column;
+      align-items: center;
+  }
+  .piece-pool {
+      width: 100%;
+      min-height: 150px;
+  }
+  .puzzle-board {
+    width: 100%;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .envelope-wrapper {
+    transform: scale(0.7);
+  }
+  .hero h1 {
+    font-size: 3rem;
+  }
+  .polaroid {
+    width: 100%;
+    transform: none !important;
+    margin-bottom: 2rem;
+  }
+  .cursor,
+  .cursor-dot {
+    display: none;
+  }
+}

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Puzzle • Our Magical 2nd Month</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧩</text></svg>">
+</head>
+<body>
+  <div class="cursor"></div>
+  <div class="cursor-dot"></div>
+
+  <div class="stars"></div>
+  <div class="floating-elements"></div>
+
+  <div class="container">
+    <section class="puzzle-section" aria-label="Jigsaw puzzle">
+      <h2 class="section-title">Our Puzzle</h2>
+      <div class="puzzle-controls">
+        <label>Grid
+            <select id="grid-select">
+              <option value="3x3">3 × 3</option>
+              <option value="4x3">4 × 3</option>
+              <option value="4x4" selected>4 × 4</option>
+            </select>
+        </label>
+        <button id="shuffle-btn" class="btn primary">Shuffle</button>
+        <span id="moves" class="pill">Moves: 0</span>
+        <span id="timer" class="pill">00:00</span>
+      </div>
+
+      <div class="puzzle-layout">
+        <div id="puzzle-board" class="puzzle-board target-board">
+          <!-- Slots will be generated here -->
+        </div>
+        <div id="piece-pool" class="piece-pool">
+          <!-- Pieces will be scattered here -->
+        </div>
+      </div>
+      <p class="puzzle-hint">💕 Drag pieces from the left into the correct spots on the right! 💕</p>
+    </section>
+  </div>
+
+  <div id="puzzle-win" class="puzzle-win" hidden>
+    <div class="win-card">
+      <h3>Perfect Match! 🧩✨</h3>
+      <p>Just like us ❤️</p>
+      <button id="play-again" class="btn ghost">Play again</button>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      const board = document.getElementById('puzzle-board');
+      const pool = document.getElementById('piece-pool');
+      const gridSelect = document.getElementById('grid-select');
+      const shuffleBtn = document.getElementById('shuffle-btn');
+      const movesEl = document.getElementById('moves');
+      const timerEl = document.getElementById('timer');
+      const winEl = document.getElementById('puzzle-win');
+      const playAgain = document.getElementById('play-again');
+
+      const DEFAULT_IMG = 'assets/couple-photo.jpg';
+
+      let rows = 4, cols = 4;
+      let imgUrl = null;
+      let moves = 0; let startTime = null; let timerInt = null; let started = false;
+      let selectedPiece = null; // For click-to-move
+
+      function setGridFromSelect() {
+        const [c, r] = gridSelect.value.split('x');
+        cols = parseInt(c, 10);
+        rows = parseInt(r, 10);
+      }
+
+      function startTimer() {
+        clearInterval(timerInt);
+        startTime = Date.now();
+        timerInt = setInterval(() => {
+          const s = Math.floor((Date.now() - startTime)/1000);
+          const m2 = String(Math.floor(s/60)).padStart(2,'0');
+          const s2 = String(s%60).padStart(2,'0');
+          timerEl.textContent = `${m2}:${s2}`;
+        }, 500);
+      }
+
+      function stopTimer() { clearInterval(timerInt); }
+      function resetStats() { moves = 0; movesEl.textContent = `Moves: ${moves}`; timerEl.textContent = '00:00'; }
+
+      function buildPuzzle(imageUrl) {
+        imgUrl = imageUrl;
+        setGridFromSelect();
+        resetStats();
+        
+        board.innerHTML = '';
+        pool.innerHTML = '';
+        
+        board.style.setProperty('--rows', rows);
+        board.style.setProperty('--cols', cols);
+        winEl.hidden = true;
+        started = false;
+        selectedPiece = null;
+
+        const total = rows * cols;
+        
+        // Create slots
+        for (let i = 0; i < total; i++) {
+            const slot = document.createElement('div');
+            slot.className = 'slot';
+            slot.dataset.index = i;
+            board.appendChild(slot);
+        }
+
+        // Create pieces
+        const pieces = [];
+        for (let i = 0; i < total; i++) {
+          const piece = document.createElement('div');
+          piece.className = 'tile';
+          piece.draggable = true;
+          piece.id = 'piece-' + i;
+          piece.dataset.correct = i;
+          
+          const cx = i % cols;
+          const cy = Math.floor(i / cols);
+
+          // Add edge classes for puzzle shapes
+          if (cy === 0) piece.classList.add('top-edge');
+          if (cy === rows - 1) piece.classList.add('bottom-edge');
+          if (cx === 0) piece.classList.add('left-edge');
+          if (cx === cols - 1) piece.classList.add('right-edge');
+          
+          piece.style.backgroundImage = `url('${imageUrl}')`;
+          piece.style.backgroundSize = `${cols*100}% ${rows*100}%`;
+          piece.style.backgroundPosition = `${(cx/(cols-1))*100}% ${(cy/(rows-1))*100}%`;
+          
+          pieces.push(piece);
+        }
+
+        // Fisher-Yates Shuffle for perfect randomness
+        for (let i = pieces.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [pieces[i], pieces[j]] = [pieces[j], pieces[i]];
+        }
+        pieces.forEach(p => pool.appendChild(p));
+
+        setupInteraction();
+        startTimer();
+      }
+
+      function setupInteraction() {
+        const draggables = document.querySelectorAll('.tile');
+        const slots = document.querySelectorAll('.slot');
+        const poolContainer = document.getElementById('piece-pool');
+
+        // Drag & Drop
+        draggables.forEach(drag => {
+          drag.addEventListener('dragstart', (e) => {
+            e.dataTransfer.setData('text/plain', e.target.id);
+            // Add a class for visual feedback
+            requestAnimationFrame(() => e.target.classList.add('dragging'));
+            if(!started) { started = true; startTimer(); }
+            // Do NOT auto-select on drag (prevents ghost clicks)
+          });
+          
+          drag.addEventListener('dragend', (e) => {
+            e.target.classList.remove('dragging');
+          });
+
+          // Click handling
+          drag.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (selectedPiece === e.target) {
+                deselectPiece();
+            } else {
+                selectPiece(e.target);
+            }
+          });
+        });
+
+        const dropZones = [...slots, poolContainer];
+        dropZones.forEach(zone => {
+            // Drag Drop
+            zone.addEventListener('dragover', e => {
+                e.preventDefault(); // Necessary for drop
+                e.dataTransfer.dropEffect = 'move';
+            });
+            zone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                const id = e.dataTransfer.getData('text/plain');
+                const piece = document.getElementById(id);
+                if (piece) movePiece(piece, zone);
+            });
+
+            // Click Drop
+            zone.addEventListener('click', (e) => {
+                if (selectedPiece) {
+                    // Check if clicked ON a piece inside the zone?
+                    // But we handled piece click above with stopPropagation.
+                    // So this is clicking an empty zone or slot.
+                    movePiece(selectedPiece, zone);
+                }
+            });
+        });
+      }
+
+      function selectPiece(piece) {
+        if (selectedPiece) selectedPiece.classList.remove('selected');
+        selectedPiece = piece;
+        selectedPiece.classList.add('selected');
+      }
+
+      function deselectPiece() {
+        if (selectedPiece) selectedPiece.classList.remove('selected');
+        selectedPiece = null;
+      }
+
+      function movePiece(piece, targetZone) {
+          // If target is pool
+          if (targetZone.id === 'piece-pool') {
+              targetZone.appendChild(piece);
+          } else {
+              // Target is slot? Or piece inside slot?
+              let slot = targetZone;
+              if (!slot.classList.contains('slot')) {
+                  slot = slot.closest('.slot');
+              }
+              
+              if (slot) {
+                  // If slot has piece, swap to pool
+                  if (slot.children.length > 0 && slot.children[0] !== piece) {
+                      const existing = slot.children[0];
+                      pool.appendChild(existing);
+                  }
+                  slot.appendChild(piece);
+              } else {
+                  // Fallback: if dropped on board but not slot? (Shouldn't happen with listeners on slots)
+                  // If "zone" was pool, handled. If zone was slot, handled.
+              }
+          }
+          
+          moves++; movesEl.textContent = `Moves: ${moves}`;
+          deselectPiece();
+          checkSolved();
+      }
+
+      function checkSolved() {
+          const slots = document.querySelectorAll('.slot');
+          let correctCount = 0;
+          let filledCount = 0;
+          const total = rows * cols;
+          
+          slots.forEach(slot => {
+              if (slot.children.length > 0) {
+                  filledCount++;
+                  const piece = slot.children[0];
+                  if (piece.dataset.correct === slot.dataset.index) {
+                      correctCount++;
+                  }
+              }
+          });
+
+          if (filledCount === total && correctCount === total) {
+              stopTimer();
+              setTimeout(() => { winEl.hidden = false; }, 300);
+          }
+      }
+
+      // Events
+      gridSelect.addEventListener('change', () => { if (imgUrl) buildPuzzle(imgUrl); });
+      shuffleBtn.addEventListener('click', () => { if (imgUrl) buildPuzzle(imgUrl); });
+      playAgain.addEventListener('click', () => { winEl.hidden = true; if (imgUrl) buildPuzzle(imgUrl); });
+
+      // Init
+      const testImg = new Image();
+      testImg.onload = () => buildPuzzle(DEFAULT_IMG);
+      testImg.onerror = () => { board.innerHTML = '<p class="puzzle-hint">Image not found.</p>'; };
+      testImg.src = DEFAULT_IMG;
+    })();
+  </script>
+
+  <script src="script.js"></script>
+</body>
+</html>
